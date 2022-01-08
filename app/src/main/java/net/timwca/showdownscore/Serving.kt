@@ -2,7 +2,7 @@ package net.timwca.showdownscore
 /**
  * Класс для функций, связанных с подачами игроков
  */
-class Serving (){
+class Serving {
 
     /**
      * Определяет, какой игрок подаёт.
@@ -11,10 +11,8 @@ class Serving (){
      */
     var servingPlayer : Boolean = false
 
-    /**
-     * Определяет номер подачи (1-я или 2-я)
-     */
-    private var servNum : Int = 1
+    /** Определяет номер подачи (1-я или 2-я) */
+    var servNum : Int = 2
 
     /**
      * Определяет, какой игрок подаёт первым в игре.
@@ -22,20 +20,17 @@ class Serving (){
      * True - Игрок B
      */
     var firstServingPlayer : Boolean = false
-    /**
-     * Предыдущее значение строки подачи
-     */
-    var lastServingText : String = ""
+
+    /** Определяет, является ли эта подача первой в игре */
+    var isFirstServing = true
 
     /**
-     * Определяет, является ли эта подача первой в игре
-     */
-    var isFirstServing = true
-    /**
      * Определяет подающего игрока и номер подачи.
+     * @param playerA Имя Игрока А
+     * @param playerB Имя Игрока B
      * @return Строка формата "Подающий игрок - номер подачи". Например: "Игрок А - 1"
      */
-    fun servText(playerA : String, playerB : String): String {
+    fun servText(playerA : String = "Игрок А", playerB : String = "Игрок B"): String {
         if (isFirstServing){ // Если первая подача в игре
             isFirstServing = false
             servingPlayer = firstServingPlayer
