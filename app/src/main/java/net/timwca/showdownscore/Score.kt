@@ -45,9 +45,11 @@ class Score {
         if ((pointsA >= 11) or (pointsB >= 11)){
             if (((pointsA - pointsB) >= 2) or ((pointsB - pointsA) >= 2)){
                 if (set <= 3){
-                    set++ // Прибавляем номер сета
-                    if (pointsA > pointsB) scoreA++ // Если выиграл Игрок A
-                    else  scoreB++
+                    if (set < 3) set++ // Прибавляем номер сета
+                    if ((scoreA < 2) and (scoreB < 2)) {
+                            if (pointsA > pointsB) scoreA++ // Если выиграл Игрок A
+                            else  scoreB++
+                        }
                 }
 
 
