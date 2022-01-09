@@ -127,6 +127,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun restartApp(view: View) {
+        playerA.setText("Игрок A")
+        playerB.setText("Игрок B")
+
         this.recreate()
     }
 }
