@@ -39,13 +39,6 @@ lateinit var pointsB : TextView // Очки Игрока B
 lateinit var scoreText : TextView // Счёт по сетам
 lateinit var set : TextView // Номер сета
 
-/* Массив для сохранения последнего действия
-* pointsA - очки Игрока А
-* pointsB - очки Игрока B
-* servingPlayer - подающий игрок
-* servingNum - номер подачи */
-var save: Map<String, Any> = mutableMapOf("pointsA" to 0, "pointsB" to 0, "servingPlayer" to 0, "servingNum" to 1)
-
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +57,22 @@ class MainActivity : AppCompatActivity() {
         set = findViewById(R.id.textSet)
     }
 
+    /* Массив для сохранения последнего действия
+     * pointsA - очки Игрока А
+     * pointsB - очки Игрока B
+     * servingPlayer - подающий игрок
+     * servingNum - номер подачи */
+    var save: Map<String, Any> = mutableMapOf("pointsA" to 0, "pointsB" to 0, "servingPlayer" to 0, "servingNum" to 1)
+
+    var isStarted: Boolean = true // Программа только запустилась?
+
     fun saveFun(){ // Сохранение последних результатов
         save += "pointsA" to score.pointsA // Сохранение последних очков Игрока A
         save += "pointsB" to score.pointsB // Сохранение последних очков Игрока A
         save += "servingPlayer" to serving.servingPlayer // Сохранение подающего игрока
         save += "servingNum" to serving.servNum // Сохранение номера подачи
+
+        isStarted = false
     }
 
     fun btnServingA(view: View) { // Обработчик нажатия кнопки "Первая подача A"
@@ -168,14 +172,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun undo(view: View){ // Обработчик нажатия кнопки Undo
-        score.pointsA = save["pointsA"] as Int
-        score.pointsB = save["pointsB"] as Int
-        serving.servingPlayer = save["servingPlayer"] as Boolean
-        serving.servNum = save["servingNum"] as Int
+        if (!isStarted) {
+            /* При вызове функции сразу после запуска программа крашится.
+            * Для этого проверяем, были ли какие-то действия после запуска. */
+            score.pointsA = save["pointsA"] as Int
+            score.pointsB = save["pointsB"] as Int
+            serving.servingPlayer = save["servingPlayer"] as Boolean
+            serving.servNum = save["servingNum"] as Int
 
-        servingText.text = serving.servTextWithoutUpdate(playerA.text.toString(), playerB.text.toString())
-        score.scoreUpdate()
-        pointsA.text = score.pointsA.toString()
-        pointsB.text = score.pointsB.toString()
+            servingText.text = serving.servTextWithoutUpdate(playerA.text.toString(), playerB.text.toString())
+            score.scoreUpdate()
+            pointsA.text = score.pointsA.toString()
+            pointsB.text = score.pointsB.toString()
+        }
     }
 }
