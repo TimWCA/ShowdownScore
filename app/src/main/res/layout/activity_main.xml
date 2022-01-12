@@ -13,7 +13,7 @@
  ТОВАРНОГО ВИДА или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННЫХ ЦЕЛЕЙ. Подробнее см. в Стандартной общественной лицензии GNU.
 
  Вы должны были получить копию Стандартной общественной лицензии GNU вместе с этой программой. Если это не так,
- см. <https://www.gnu.org/licenses/>.Вы должны были получить копию Стандартной общественной лицензии GNU вместе с этой программой. Если это не так, см. <https://www.gnu.org/licenses/>.
+ см. <https://www.gnu.org/licenses/>. Вы должны были получить копию Стандартной общественной лицензии GNU вместе с этой программой. Если это не так, см. <https://www.gnu.org/licenses/>.
 -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -168,5 +168,14 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:layout_constraintGuide_begin="518dp" android:id="@+id/guideline5"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_revert"
+            android:id="@+id/imageButton2"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/serving"
+            android:onClick="undo" tools:ignore="SpeakableTextPresentCheck"
+            app:layout_constraintStart_toEndOf="@+id/add1PointToA" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/add2PointsToB"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

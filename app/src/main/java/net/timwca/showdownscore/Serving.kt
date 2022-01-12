@@ -62,4 +62,13 @@ class Serving {
         return if (!servingPlayer) "Подача: $playerA - $servNum"
         else "Подача: $playerB - $servNum"
     }
+
+    /**
+     * Выводит текст подачи без обновления. Используются данные из переменых servingPlayer и servNum.
+     * @return Строка формата "Подающий игрок - номер подачи". Например: "Игрок А - 1"
+     */
+    fun servTextWithoutUpdate(playerA : String = "Игрок А", playerB : String = "Игрок B"): String {
+        return if (!servingPlayer) "Подача: $playerA - $servNum"
+        else "Подача: $playerB - $servNum"
+    }
 }
