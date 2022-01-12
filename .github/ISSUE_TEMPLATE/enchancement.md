@@ -3,7 +3,7 @@ name: Предложение
 about: Предложите идею для этого проекта
 title: "[Предложение]"
 labels: enhancement
-assignees: TimWCA
+assignees: ''
 
 ---
 
