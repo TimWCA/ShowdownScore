@@ -93,12 +93,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun add2PlayerA(view: View) {
-        saveFun()
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
         score.addPoints(false, 2) // Добавить 2 очка Игроку А
         var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
         if (isSetEnd) {
             /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer // Игрок B
+            serving.servingPlayer = serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
@@ -111,12 +115,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun add1PlayerA(view: View) {
-        saveFun()
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
         score.addPoints(false, 1) // Добавить 2 очка Игроку А
         var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
         if (isSetEnd) {
             /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer // Игрок B
+            serving.servingPlayer = serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
@@ -129,12 +137,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun add2PlayerB(view: View) {
-        saveFun()
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
         score.addPoints(true, 2) // Добавить 2 очка Игроку А
         var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
         if (isSetEnd) {
             /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer // Игрок B
+            serving.servingPlayer = serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
@@ -147,12 +159,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun add1PlayerB(view: View) {
-        saveFun()
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
         score.addPoints(true, 1) // Добавить 2 очка Игроку А
         var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
         if (isSetEnd) {
             /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer // Игрок B
+            serving.servingPlayer = serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
