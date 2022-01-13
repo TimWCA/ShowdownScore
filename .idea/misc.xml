@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--
- © Вихрянов Т. Д., 2022
-
- Этот файл — часть Showdown Score.
-
- Showdown Score — свободная программа: вы можете перераспространять ее и/или изменять ее на условиях Стандартной
- общественной лицензии GNU в том виде, в каком она была опубликована Фондом свободного программного обеспечения;
- либо версии 3 лицензии, либо (по вашему выбору) любой более поздней версии.
-
- Showdown Score распространяется в надежде, что она будет полезной, но БЕЗО ВСЯКИХ ГАРАНТИЙ; даже без неявной гарантии
- ТОВАРНОГО ВИДА или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННЫХ ЦЕЛЕЙ. Подробнее см. в Стандартной общественной лицензии GNU.
-
- Вы должны были получить копию Стандартной общественной лицензии GNU вместе с этой программой. Если это не так,
- см. <https://www.gnu.org/licenses/>.Вы должны были получить копию Стандартной общественной лицензии GNU вместе с этой программой. Если это не так, см. <https://www.gnu.org/licenses/>.
--->
-
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/vihri/IntelliJIDEAProjects/ShowdownScore/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/vihri/IntelliJIDEAProjects/ShowdownScore/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="..\:/Users/vihri/IntelliJIDEAProjects/ShowdownScore/app/src/main/res/layout/activity_main.xml" value="0.17" />
+        <entry key="..\:/Users/vihri/IntelliJIDEAProjects/ShowdownScore/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/vihri/IntelliJIDEAProjects/ShowdownScore/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/vihri/IntelliJIDEAProjects/ShowdownScore/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>

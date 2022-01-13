@@ -57,6 +57,23 @@ class MainActivity : AppCompatActivity() {
         set = findViewById(R.id.textSet)
     }
 
+    /* Массив для сохранения последнего действия
+     * pointsA - очки Игрока А
+     * pointsB - очки Игрока B
+     * servingPlayer - подающий игрок
+     * servingNum - номер подачи */
+    var save: Map<String, Any> = mutableMapOf("pointsA" to 0, "pointsB" to 0, "servingPlayer" to 0, "servingNum" to 1)
+
+    var isStarted: Boolean = true // Программа только запустилась?
+
+    fun saveFun(){ // Сохранение последних результатов
+        save += "pointsA" to score.pointsA // Сохранение последних очков Игрока A
+        save += "pointsB" to score.pointsB // Сохранение последних очков Игрока A
+        save += "servingPlayer" to serving.servingPlayer // Сохранение подающего игрока
+        save += "servingNum" to serving.servNum // Сохранение номера подачи
+
+        isStarted = false
+    }
 
     fun btnServingA(view: View) { // Обработчик нажатия кнопки "Первая подача A"
         if (serving.isFirstServing) { // Если это первая подача в игре
@@ -76,11 +93,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun add2PlayerA(view: View) {
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
         score.addPoints(false, 2) // Добавить 2 очка Игроку А
         var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
         if (isSetEnd) {
             /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer // Игрок B
+            serving.servingPlayer = serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
@@ -93,11 +115,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun add1PlayerA(view: View) {
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
         score.addPoints(false, 1) // Добавить 2 очка Игроку А
         var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
         if (isSetEnd) {
             /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer // Игрок B
+            serving.servingPlayer = serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
@@ -110,11 +137,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun add2PlayerB(view: View) {
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
         score.addPoints(true, 2) // Добавить 2 очка Игроку А
         var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
         if (isSetEnd) {
             /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer // Игрок B
+            serving.servingPlayer = serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
@@ -127,11 +159,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun add1PlayerB(view: View) {
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
         score.addPoints(true, 1) // Добавить 2 очка Игроку А
         var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
         if (isSetEnd) {
             /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer // Игрок B
+            serving.servingPlayer = serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
@@ -148,5 +185,21 @@ class MainActivity : AppCompatActivity() {
         playerB.setText("Игрок B")
 
         this.recreate()
+    }
+
+    fun undo(view: View){ // Обработчик нажатия кнопки Undo
+        if (!isStarted) {
+            /* При вызове функции сразу после запуска программа крашится.
+            * Для этого проверяем, были ли какие-то действия после запуска. */
+            score.pointsA = save["pointsA"] as Int
+            score.pointsB = save["pointsB"] as Int
+            serving.servingPlayer = save["servingPlayer"] as Boolean
+            serving.servNum = save["servingNum"] as Int
+
+            servingText.text = serving.servTextWithoutUpdate(playerA.text.toString(), playerB.text.toString())
+            score.scoreUpdate()
+            pointsA.text = score.pointsA.toString()
+            pointsB.text = score.pointsB.toString()
+        }
     }
 }
