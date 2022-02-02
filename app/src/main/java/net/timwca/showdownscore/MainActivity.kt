@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         if (isSetEnd) {
             /* Меняем первую подачу */
             serving.servingPlayer = serving.firstServingPlayer
+            serving.firstServingPlayer = !serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
         }
