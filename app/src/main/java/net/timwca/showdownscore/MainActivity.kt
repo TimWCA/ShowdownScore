@@ -17,15 +17,12 @@
 
 package net.timwca.showdownscore
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 
 
 /* Общие переменные */
@@ -38,6 +35,7 @@ lateinit var pointsA : TextView // Очки Игрока A
 lateinit var pointsB : TextView // Очки Игрока B
 lateinit var scoreText : TextView // Счёт по сетам
 lateinit var set : TextView // Номер сета
+var isChange: Boolean = false // Был ли переход
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +64,8 @@ class MainActivity : AppCompatActivity() {
 
     var isStarted: Boolean = true // Программа только запустилась?
 
-    fun saveFun(){ // Сохранение последних результатов
+    /* Сохранение последних результатов */
+    fun saveFun(){
         save += "pointsA" to score.pointsA // Сохранение последних очков Игрока A
         save += "pointsB" to score.pointsB // Сохранение последних очков Игрока A
         save += "servingPlayer" to serving.servingPlayer // Сохранение подающего игрока
@@ -75,111 +74,78 @@ class MainActivity : AppCompatActivity() {
         isStarted = false
     }
 
-    fun btnServingA(view: View) { // Обработчик нажатия кнопки "Первая подача A"
+    /* Добавляет очки игроку и обновляет счёт и подачу */
+    fun addPoints(player : Boolean, points : Int){
+        if (isStarted){
+            save += "servingPlayer" to serving.servingPlayer
+            save += "servingNum" to 1
+            isStarted = false
+        } else saveFun()
+        score.addPoints(player, points) // Добавить 2 очка Игроку А
+        var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
+        if (isSetEnd) {
+            /* Меняем первую подачу */
+            serving.servingPlayer = serving.firstServingPlayer
+            serving.firstServingPlayer = !serving.firstServingPlayer
+            serving.servNum = 1
+            servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
+            val toast: Toast = Toast.makeText(this, "Победитель: ${if (!score.winner) playerA.text else playerB.text} ", Toast.LENGTH_LONG)
+            toast.show()
+        }
+
+        /* Уведомление о переходе в 3 сете */
+        if (!isChange){
+            if ((score.set == 3) and ((score.pointsA >= 6) or (score.pointsB >= 6))) {
+                val toast: Toast = Toast.makeText(this, "Переход", Toast.LENGTH_SHORT)
+                toast.show()
+                isChange = true
+            }
+        }
+        pointsA.text = score.pointsA.toString() // Обновить очки Игрока A
+        pointsB.text = score.pointsB.toString() // Обновить очки Игрока B
+        scoreText.text = "Счёт: ${score.scoreA} : ${score.scoreB}"
+        set.text = "Сет: ${score.set}" // Обновить сет
+
+        servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString()) // Обновить строку подачи
+    }
+
+    /* Выставляет первую подачу и выводит строку подачи */
+    fun serv(player: Boolean){
         if (serving.isFirstServing) { // Если это первая подача в игре
             serving.servNum = 1
-            serving.firstServingPlayer = false // Игрок A
+            serving.firstServingPlayer = player // Игрок A
             servingText.text =
                 serving.servText(playerA.text.toString(), playerB.text.toString()) // Формирование новой строки подачи
         }
     }
 
-    fun btnServingB(view: View) { // Обработчик нажатия кнопки "Первая подача B"
-        if (serving.isFirstServing) { // Если это первая подача в игре
-            serving.servNum = 1
-            serving.firstServingPlayer = true // Игрок B
-            servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
-        }
+    /* Обработчики нажатия кнопок выбора первой подачи */
+    fun btnServingA(view: View) {
+        serv(false)
     }
 
-    fun add2PlayerA(view: View) {
-        if (isStarted){
-            save += "servingPlayer" to serving.servingPlayer
-            save += "servingNum" to 1
-            isStarted = false
-        } else saveFun()
-        score.addPoints(false, 2) // Добавить 2 очка Игроку А
-        var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
-        if (isSetEnd) {
-            /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer
-            serving.servNum = 1
-            servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
-        }
-        pointsA.text = score.pointsA.toString() // Обновить очки Игрока A
-        pointsB.text = score.pointsB.toString() // Обновить очки Игрока B
-        scoreText.text = "Счёт: ${score.scoreA} : ${score.scoreB}"
-        set.text = "Сет: ${score.set}" // Обновить сет
+    fun btnServingB(view: View) {
+        serv(true)
+    }
 
-        servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString()) // Обновить строку подачи
+    /* Обработчики нажатия кнопок добавления очков */
+    fun add2PlayerA(view: View) {
+        addPoints(false, 2)
     }
 
     fun add1PlayerA(view: View) {
-        if (isStarted){
-            save += "servingPlayer" to serving.servingPlayer
-            save += "servingNum" to 1
-            isStarted = false
-        } else saveFun()
-        score.addPoints(false, 1) // Добавить 2 очка Игроку А
-        var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
-        if (isSetEnd) {
-            /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer
-            serving.servNum = 1
-            servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
-        }
-        pointsA.text = score.pointsA.toString() // Обновить очки Игрока A
-        pointsB.text = score.pointsB.toString() // Обновить очки Игрока B
-        scoreText.text = "Счёт: ${score.scoreA} : ${score.scoreB}"
-        set.text = "Сет: ${score.set}" // Обновить сет
-
-        servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString()) // Обновить строку подачи
+        addPoints(false, 1)
     }
 
     fun add2PlayerB(view: View) {
-        if (isStarted){
-            save += "servingPlayer" to serving.servingPlayer
-            save += "servingNum" to 1
-            isStarted = false
-        } else saveFun()
-        score.addPoints(true, 2) // Добавить 2 очка Игроку А
-        var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
-        if (isSetEnd) {
-            /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer
-            serving.servNum = 1
-            servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
-        }
-        pointsA.text = score.pointsA.toString() // Обновить очки Игрока A
-        pointsB.text = score.pointsB.toString() // Обновить очки Игрока B
-        scoreText.text = "Счёт: ${score.scoreA} : ${score.scoreB}"
-        set.text = "Сет: ${score.set}" // Обновить сет
-
-        servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString()) // Обновить строку подачи
+        addPoints(true, 2)
     }
 
     fun add1PlayerB(view: View) {
-        if (isStarted){
-            save += "servingPlayer" to serving.servingPlayer
-            save += "servingNum" to 1
-            isStarted = false
-        } else saveFun()
-        score.addPoints(true, 1) // Добавить 2 очка Игроку А
-        var isSetEnd = score.scoreUpdate() // Обновить счёт по сетам
-        if (isSetEnd) {
-            /* Меняем первую подачу */
-            serving.servingPlayer = serving.firstServingPlayer
-            serving.servNum = 1
-            servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
-        }
-        pointsA.text = score.pointsA.toString() // Обновить очки Игрока A
-        pointsB.text = score.pointsB.toString() // Обновить очки Игрока B
-        scoreText.text = "Счёт: ${score.scoreA} : ${score.scoreB}"
-        set.text = "Сет: ${score.set}" // Обновить сет
-
-        servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString()) // Обновить строку подачи
+        addPoints(true, 1)
     }
 
+    /* Обработчик нажатия кнопки сброса */
     fun restartApp(view: View) {
         playerA.setText("Игрок A")
         playerB.setText("Игрок B")
