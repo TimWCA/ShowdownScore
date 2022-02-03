@@ -6,10 +6,11 @@
 
 _Проект использует семантическое версионирование._
 
-## [Unreleased]
+## [1.1.0](https://github.com/TimWCA/ShowdownScore/releases/tag/v1.2.0) - 2022-02-03
 ### Исправлено
 - Ошибка строки подачи для третьего сета ([#14](https://github.com/TimWCA/ShowdownScore/issues/14))
 ### Добавлено
+- Всплывающие уведомления в конце сетов
 - Всплывающее напоминание о переходе в третьем сете
 
 ## [1.1.0](https://github.com/TimWCA/ShowdownScore/releases/tag/v1.1.0) - 2022-01-13
