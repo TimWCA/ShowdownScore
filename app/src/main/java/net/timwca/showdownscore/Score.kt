@@ -36,6 +36,9 @@ class Score {
     /** Счёт по сетам Игрока B */
     var scoreB = 0;
 
+    /** Победитель */
+    var winner: Boolean = false;
+
     /**
      * Функция добавления очков игроку
      * @param player Игрок, которому добавить очки: False - Игрок А, True - Игрок B
@@ -64,11 +67,16 @@ class Score {
                 if (set <= 3){
                     if (set < 3) set++ // Прибавляем номер сета
                     if ((scoreA < 2) and (scoreB < 2)) {
-                            if (pointsA > pointsB) scoreA++ // Если выиграл Игрок A
-                            else  scoreB++
+                            if (pointsA > pointsB){ // Если выиграл Игрок A
+                                scoreA++
+                                winner = false
+                            }
+                            else  {
+                                scoreB++
+                                winner = true
+                            }
                         }
                 }
-
 
                 /* Обнуляем счёт */
                 pointsA = 0

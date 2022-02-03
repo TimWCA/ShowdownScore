@@ -22,6 +22,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 
 
 /* Общие переменные */
@@ -34,6 +35,7 @@ lateinit var pointsA : TextView // Очки Игрока A
 lateinit var pointsB : TextView // Очки Игрока B
 lateinit var scoreText : TextView // Счёт по сетам
 lateinit var set : TextView // Номер сета
+var isChange: Boolean = false // Был ли переход
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +89,17 @@ class MainActivity : AppCompatActivity() {
             serving.firstServingPlayer = !serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
+            val toast: Toast = Toast.makeText(this, "Победитель: ${if (!score.winner) playerA.text else playerB.text} ", Toast.LENGTH_LONG)
+            toast.show()
+        }
+
+        /* Уведомление о переходе в 3 сете */
+        if (!isChange){
+            if ((score.set == 3) and ((score.pointsA >= 6) or (score.pointsB >= 6))) {
+                val toast: Toast = Toast.makeText(this, "Переход", Toast.LENGTH_SHORT)
+                toast.show()
+                isChange = true
+            }
         }
         pointsA.text = score.pointsA.toString() // Обновить очки Игрока A
         pointsB.text = score.pointsB.toString() // Обновить очки Игрока B
