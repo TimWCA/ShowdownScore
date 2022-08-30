@@ -23,6 +23,8 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import android.app.Activity
+import android.content.Intent
 
 
 /* Общие переменные */
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         pointsB = findViewById(R.id.textScoreB)
         scoreText = findViewById(R.id.textScore)
         set = findViewById(R.id.textSet)
+
     }
 
     /* Массив для сохранения последнего действия
@@ -167,5 +170,11 @@ class MainActivity : AppCompatActivity() {
             pointsA.text = score.pointsA.toString()
             pointsB.text = score.pointsB.toString()
         }
+    }
+
+    fun btnTeamMode(view: View){
+        val intent = Intent(this@MainActivity, TeamModeActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

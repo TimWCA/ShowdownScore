@@ -136,6 +136,17 @@
             android:layout_height="wrap_content" android:id="@+id/buttonReset"
             app:layout_constraintStart_toStartOf="@+id/textScore" android:layout_marginTop="18dp"
             app:layout_constraintTop_toBottomOf="@+id/textScore" android:onClick="restartApp"/>
+
+    <Button
+            android:text="КОМ."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonReset2"
+            app:layout_constraintStart_toStartOf="@+id/textScore"
+            android:layout_marginTop="68dp"
+            app:layout_constraintTop_toBottomOf="@+id/textScore"
+            android:onClick="btnTeamMode" />
+
     <TextView
             android:text="0"
             android:layout_width="wrap_content"
