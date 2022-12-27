@@ -7,7 +7,7 @@
 Формат основан на ["Ведите Changelog"](https://keepachangelog.com/ru/1.0.0/), и этот проект придерживается [семантического версионирования](https://semver.org/lang/ru/spec/v2.0.0.html).
 
 ## [2.0.0](https://github.com/TimWCA/ShowdownScore/releases/tag/v2.0.0) - 2022-12-27
-### Изменено
+### Исправлено
 - Исправлен номер версии (так как переименование - обратно несовместимое изменение, увеличивается мажорная версия).
 
 ## [1.2.1](https://github.com/TimWCA/ShowdownScore/releases/tag/v1.2.1) - 2022-12-27
