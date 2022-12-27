@@ -15,7 +15,7 @@
  программой. Если это не так, см. <https://www.gnu.org/licenses/>.
  */
 
-package net.timwca.showdownscore
+package ru.timwca.showdownscore
 
 import org.junit.Test
 

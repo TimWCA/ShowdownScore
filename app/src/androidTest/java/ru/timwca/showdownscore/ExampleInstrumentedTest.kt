@@ -14,7 +14,7 @@
  см. <https://www.gnu.org/licenses/>.
  */
 
-package net.timwca.showdownscore
+package ru.timwca.showdownscore
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

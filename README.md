@@ -3,7 +3,7 @@
 
 Это приложение можно использовать на тренировках и неофициальных соревнованиях. Оно заменяет протокол игры, подсказывая счёт и подачу.
 
-<a href="https://apps.rustore.ru/app/net.timwca.showdownscore" target="_blank">
+<a href="https://apps.rustore.ru/app/ru.timwca.showdownscore" target="_blank">
 <img src="https://user-images.githubusercontent.com/52562657/209462002-b8ce0bd9-7456-47d1-87f9-1f594198f2f3.png"
 width="188" height="63" alt="Доступно в RuStore">
 </a>  

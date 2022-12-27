@@ -14,7 +14,7 @@
  см. <https://www.gnu.org/licenses/>.
  */
 
-package net.timwca.showdownscore
+package ru.timwca.showdownscore
 /**
  * Класс для функций, связанных с подачами игроков
  */
