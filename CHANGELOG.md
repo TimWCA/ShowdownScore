@@ -6,9 +6,9 @@
 
 Формат основан на ["Ведите Changelog"](https://keepachangelog.com/ru/1.0.0/), и этот проект придерживается [семантического версионирования](https://semver.org/lang/ru/spec/v2.0.0.html).
 
-## [Новое]
-### Добавлено
-- Режим командной игры
+## [1.2.1](https://github.com/TimWCA/ShowdownScore/releases/tag/v1.2.1) - 2022-12-27
+### Изменено
+- Имя пакета в связи с утерей ключа цифровой подписи разработчика
 
 ## [1.2.0](https://github.com/TimWCA/ShowdownScore/releases/tag/v1.2.0) - 2022-02-03
 ### Добавлено
