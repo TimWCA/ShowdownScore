@@ -17,24 +17,28 @@
 
 package ru.timwca.showdownscore
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import ru.timwca.showdownscore.R
 
 
 /* Общие переменные */
-lateinit var playerA : EditText // Имя Игрока A
-lateinit var playerB : EditText // Имя Игрока B
-lateinit var serving : Serving // Экземпляр класса Serving
-lateinit var servingText : TextView // Строка для подач
-lateinit var score : Score // Экземпляр класса Score
-lateinit var pointsA : TextView // Очки Игрока A
-lateinit var pointsB : TextView // Очки Игрока B
-lateinit var scoreText : TextView // Счёт по сетам
-lateinit var set : TextView // Номер сета
+lateinit var playerA: EditText // Имя Игрока A
+lateinit var playerB: EditText // Имя Игрока B
+lateinit var serving: Serving // Экземпляр класса Serving
+lateinit var servingText: TextView // Строка для подач
+lateinit var score: Score // Экземпляр класса Score
+lateinit var pointsA: TextView // Очки Игрока A
+lateinit var pointsB: TextView // Очки Игрока B
+lateinit var scoreText: TextView // Счёт по сетам
+lateinit var set: TextView // Номер сета
+lateinit var coinText: TextView // Состояние монетки
 var isChange: Boolean = false // Был ли переход
 
 class MainActivity : AppCompatActivity() {
@@ -53,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         pointsB = findViewById(R.id.textScoreB)
         scoreText = findViewById(R.id.textScore)
         set = findViewById(R.id.textSet)
+        coinText = findViewById(R.id.textCoin)
     }
 
     /* Массив для сохранения последнего действия
@@ -60,12 +65,13 @@ class MainActivity : AppCompatActivity() {
      * pointsB - очки Игрока B
      * servingPlayer - подающий игрок
      * servingNum - номер подачи */
-    var save: Map<String, Any> = mutableMapOf("pointsA" to 0, "pointsB" to 0, "servingPlayer" to 0, "servingNum" to 1)
+    var save: Map<String, Any> =
+        mutableMapOf("pointsA" to 0, "pointsB" to 0, "servingPlayer" to 0, "servingNum" to 1)
 
     var isStarted: Boolean = true // Программа только запустилась?
 
     /* Сохранение последних результатов */
-    fun saveFun(){
+    fun saveFun() {
         save += "pointsA" to score.pointsA // Сохранение последних очков Игрока A
         save += "pointsB" to score.pointsB // Сохранение последних очков Игрока A
         save += "servingPlayer" to serving.servingPlayer // Сохранение подающего игрока
@@ -75,8 +81,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     /* Добавляет очки игроку и обновляет счёт и подачу */
-    fun addPoints(player : Boolean, points : Int){
-        if (isStarted){
+    fun addPoints(player: Boolean, points: Int) {
+        if (isStarted) {
             save += "servingPlayer" to serving.servingPlayer
             save += "servingNum" to 1
             isStarted = false
@@ -89,12 +95,16 @@ class MainActivity : AppCompatActivity() {
             serving.firstServingPlayer = !serving.firstServingPlayer
             serving.servNum = 1
             servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString())
-            val toast: Toast = Toast.makeText(this, "Победитель: ${if (!score.winner) playerA.text else playerB.text} ", Toast.LENGTH_LONG)
+            val toast: Toast = Toast.makeText(
+                this,
+                "Победитель: ${if (!score.winner) playerA.text else playerB.text} ",
+                Toast.LENGTH_LONG
+            )
             toast.show()
         }
 
         /* Уведомление о переходе в 3 сете */
-        if (!isChange){
+        if (!isChange) {
             if ((score.set == 3) and ((score.pointsA >= 6) or (score.pointsB >= 6))) {
                 val toast: Toast = Toast.makeText(this, "Переход", Toast.LENGTH_SHORT)
                 toast.show()
@@ -106,16 +116,22 @@ class MainActivity : AppCompatActivity() {
         scoreText.text = "Счёт: ${score.scoreA} : ${score.scoreB}"
         set.text = "Сет: ${score.set}" // Обновить сет
 
-        servingText.text = serving.servText(playerA.text.toString(), playerB.text.toString()) // Обновить строку подачи
+        servingText.text = serving.servText(
+            playerA.text.toString(),
+            playerB.text.toString()
+        ) // Обновить строку подачи
     }
 
     /* Выставляет первую подачу и выводит строку подачи */
-    fun serv(player: Boolean){
+    fun serv(player: Boolean) {
         if (serving.isFirstServing) { // Если это первая подача в игре
             serving.servNum = 1
             serving.firstServingPlayer = player // Игрок A
             servingText.text =
-                serving.servText(playerA.text.toString(), playerB.text.toString()) // Формирование новой строки подачи
+                serving.servText(
+                    playerA.text.toString(),
+                    playerB.text.toString()
+                ) // Формирование новой строки подачи
         }
     }
 
@@ -153,7 +169,7 @@ class MainActivity : AppCompatActivity() {
         this.recreate()
     }
 
-    fun undo(view: View){ // Обработчик нажатия кнопки Undo
+    fun undo(view: View) { // Обработчик нажатия кнопки Undo
         if (!isStarted) {
             /* При вызове функции сразу после запуска программа крашится.
             * Для этого проверяем, были ли какие-то действия после запуска. */
@@ -162,10 +178,22 @@ class MainActivity : AppCompatActivity() {
             serving.servingPlayer = save["servingPlayer"] as Boolean
             serving.servNum = save["servingNum"] as Int
 
-            servingText.text = serving.servTextWithoutUpdate(playerA.text.toString(), playerB.text.toString())
+            servingText.text =
+                serving.servTextWithoutUpdate(playerA.text.toString(), playerB.text.toString())
             score.scoreUpdate()
             pointsA.text = score.pointsA.toString()
             pointsB.text = score.pointsB.toString()
+        }
+    }
+
+    /* Обработчик нажатия кнопки "Монетка" */
+    fun coin(view: View) {
+        if ((0..1).random() == 0) {
+            coinText.setText("Красный")
+            coinText.setTextColor(Color.parseColor("#FF0000"))
+        } else {
+            coinText.setText("Зелёный")
+            coinText.setTextColor(Color.parseColor("#00FF00"))
         }
     }
 }
