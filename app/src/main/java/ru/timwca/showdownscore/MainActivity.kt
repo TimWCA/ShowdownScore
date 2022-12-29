@@ -18,14 +18,16 @@
 package ru.timwca.showdownscore
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
-import android.widget.Button
+import android.widget.Chronometer
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
-import ru.timwca.showdownscore.R
+import androidx.annotation.RequiresApi
 
 
 /* Общие переменные */
@@ -39,9 +41,12 @@ lateinit var pointsB: TextView // Очки Игрока B
 lateinit var scoreText: TextView // Счёт по сетам
 lateinit var set: TextView // Номер сета
 lateinit var coinText: TextView // Состояние монетки
+lateinit var chronometer: Chronometer // Таймер
 var isChange: Boolean = false // Был ли переход
+var i : Int = 0 // Счётчтк таймера
 
 class MainActivity : AppCompatActivity() {
+    //@RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,6 +63,14 @@ class MainActivity : AppCompatActivity() {
         scoreText = findViewById(R.id.textScore)
         set = findViewById(R.id.textSet)
         coinText = findViewById(R.id.textCoin)
+
+        chronometer = findViewById(R.id.chronometer)
+        chronometer.isCountDown = true
+        chronometer.setOnChronometerTickListener {
+            i--
+            if (i < 15) chronometer.setTextColor(Color.parseColor("#FF0000"))
+            if (i < 0) chronometer.stop()
+        }
     }
 
     /* Массив для сохранения последнего действия
@@ -195,5 +208,12 @@ class MainActivity : AppCompatActivity() {
             coinText.setText("Зелёный")
             coinText.setTextColor(Color.parseColor("#00FF00"))
         }
+    }
+
+    fun chronometerClick(view: View){
+        chronometer.setTextColor(Color.parseColor("#000000"))
+        i = 60
+        chronometer.base = SystemClock.elapsedRealtime() + 60000
+        chronometer.start()
     }
 }

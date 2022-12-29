@@ -16,8 +16,7 @@
  см. <https://www.gnu.org/licenses/>.Вы должны были получить копию Стандартной общественной лицензии GNU вместе с этой программой. Если это не так, см. <https://www.gnu.org/licenses/>.
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="ru.timwca.showdownscore">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
             android:allowBackup="true"
             android:icon="@drawable/icon"
