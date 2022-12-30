@@ -18,7 +18,6 @@
 package ru.timwca.showdownscore
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
@@ -27,7 +26,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 
 
 /* Общие переменные */
@@ -69,7 +67,11 @@ class MainActivity : AppCompatActivity() {
         chronometer.setOnChronometerTickListener {
             i--
             if (i < 15) chronometer.setTextColor(Color.parseColor("#FF0000"))
-            if (i < 0) chronometer.stop()
+            if (i < 0){
+                chronometer.stop()
+                val toast: Toast = Toast.makeText(this, "Время!", Toast.LENGTH_SHORT)
+                toast.show()
+            }
         }
     }
 
